@@ -1,0 +1,26 @@
+package user
+
+import (
+    "github.com/vdias/got/view/layout"
+    "github.com/vdias/got/view/components"
+    "github.com/vdias/got/model"
+)
+
+func getAuthenticatedUser(c context.Context) string {
+    user, ok := c.Value("user").(string)
+    if !ok {
+        return ""
+    }
+
+    return user
+}
+
+templ Show(user model.User) {
+    <h1>
+        {getAuthenticatedUser(ctx)}
+    </h1>
+    @layout.Base() {
+        <h1>hello {user.Email} from the user page</h1>
+        @components.Input("email", "email")
+    }
+}
